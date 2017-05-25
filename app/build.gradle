@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "com.simplemobiletools.calendar"
@@ -30,6 +30,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    packagingOptions {
+        exclude 'META-INF/commons_release.kotlin_module'
+    }
 }
 
 dependencies {
@@ -38,6 +42,16 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     compile 'com.android.support:multidex:1.0.1'
+    compile ("org.jetbrains.anko:anko:$anko_version"){
+        exclude group : 'com.google.android', module: 'android'
+    }
+    // Anko Commons
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
+    // Anko Layouts
+    compile "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    // Anko SQLite
+    compile "org.jetbrains.anko:anko-sqlite:$anko_version"
 
     /*compile 'com.google.code.gson:gson:2.8.0'
     compile('com.google.http-client:google-http-client-gson:1.22.0') {
@@ -56,7 +70,7 @@ dependencies {
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.2-3'
+    ext.kotlin_version = '1.1.2-4'
     repositories {
         mavenCentral()
     }
@@ -64,6 +78,8 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+
+
     }
 }
 
